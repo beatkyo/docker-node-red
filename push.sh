@@ -22,7 +22,13 @@ function push-i386 {
 }
 
 function push-amd64 {
-	ARCH="amd64"
+  ARCH="amd64"
+
+  push
+}
+
+function push-aarch64 {
+	ARCH="arm64v8"
 
 	push
 }
