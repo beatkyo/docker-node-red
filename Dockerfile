@@ -2,9 +2,39 @@ ARG IMAGE
 
 FROM ${IMAGE}
 
-ARG VERSION
+ARG ZWAVE_VERSION
+ARG NODE_RED_VERSION
 
-RUN npm install node-red@$VERSION --global --unsafe-perm
+RUN set -x \    
+    && apk add --no-cache eudev \
+    && apk add --no-cache --virtual .build-deps \
+        coreutils \
+        g++ \        
+        linux-headers \
+        eudev-dev \
+        make \
+    # get open zwave
+    && curl -SL "https://github.com/OpenZWave/open-zwave/archive/V$ZWAVE_VERSION.tar.gz" | tar -xz \
+    # make & install
+    && cd "open-zwave-$ZWAVE_VERSION" \
+    && make \
+    && make install \
+    # clean
+    && cd .. \
+    && rm -rf "open-zwave-$ZWAVE_VERSION" \
+    # clean apk deps
+    && apk del .build-deps
+
+RUN set -x \    
+    && apk add --no-cache --virtual .gyp-build-deps \
+        make \
+        g++ \
+        python \
+    # install node-red & modules
+    && yarn global add node-red@$NODE_RED_VERSION \
+    && yarn global add node-red-contrib-openzwave \
+    # clean apk deps
+    && apk del .gyp-build-deps
 
 WORKDIR /opt/node-red
 RUN chown 1000:1000 .
@@ -12,6 +42,8 @@ RUN chown 1000:1000 .
 USER 1000:1000
 
 RUN set -x \
-	&& mkdir -p /opt/node-red/data
+  && mkdir -p /opt/node-red/data
+
+ENV HOME="/opt/node-red/data"
 
 ENTRYPOINT ["node-red", "--userDir", "/opt/node-red/data"]

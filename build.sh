@@ -10,38 +10,40 @@ function build {
   echo "+ build"
   echo "+ arch: ${ARCH:?}"
   echo "+ image: ${IMAGE:?}"
-  echo "+ version: ${VERSION:?}"
+  echo "+ node red version: ${NODE_RED_VERSION:?}"
+  echo "+ open zwave version: ${ZWAVE_VERSION:?}"
   echo
 
   export IMAGE
-  export VERSION
+  export NODE_RED_VERSION
 
   docker build \
     --pull \
     --build-arg "IMAGE=$IMAGE" \
-    --build-arg "VERSION=$VERSION" \
-    --tag "dalexandre/node-red-$ARCH:$VERSION" \
+    --build-arg "NODE_RED_VERSION=$NODE_RED_VERSION" \
+    --build-arg "ZWAVE_VERSION=$ZWAVE_VERSION" \
+    --tag "dalexandre/node-red-$ARCH:$NODE_RED_VERSION" \
     --tag "dalexandre/node-red-$ARCH:latest" \
     .
 }
 
 function build-i386 {
   ARCH="i386"
-  IMAGE="i386/node:8"
+  IMAGE="dalexandre/node-386"
 
   build
 }
 
 function build-amd64 {
   ARCH="amd64"
-  IMAGE="amd64/node:8"
+  IMAGE="dalexandre/node-amd64"
 
   build
 }
 
 function build-aarch64 {
   ARCH="arm64v8"
-  IMAGE="arm64v8/node:8"
+  IMAGE="dalexandre/node-arm64v8"
 
   build
 }

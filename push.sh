@@ -8,10 +8,10 @@ ARCH=${1:-$(uname -m)}
 function push {
   echo
   echo "+ push"
-  echo "+ image: dalexandre/node-red-${ARCH:?}:${VERSION:?}"
+  echo "+ image: dalexandre/node-red-${ARCH:?}:${NODE_RED_VERSION:?}"
   echo
 
-  docker push "dalexandre/node-red-$ARCH:$VERSION"
+  docker push "dalexandre/node-red-$ARCH:$NODE_RED_VERSION"
   docker push "dalexandre/node-red-$ARCH:latest"
 }
 
