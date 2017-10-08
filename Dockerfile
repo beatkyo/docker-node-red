@@ -39,11 +39,11 @@ RUN set -x \
 WORKDIR /opt/node-red
 RUN chown 1000:1000 .
 
-USER 1000:1000
+USER 1000:uucp
 
 RUN set -x \
   && mkdir -p /opt/node-red/data
 
 ENV HOME="/opt/node-red/data"
 
-ENTRYPOINT ["node-red", "--userDir", "/opt/node-red/data"]
+ENTRYPOINT ["node-red", "--userDir", "/opt/node-red/data", "--flowFile", "iot-flow.json"]
