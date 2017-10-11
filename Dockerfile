@@ -35,7 +35,7 @@ RUN set -x \
     # install node-red & modules
     && yarn global add node-red@$NODE_RED_VERSION \    
     && yarn global add node-red-contrib-openzwave \
-    && yarn add node-red-contrib-bigtimer \
+    && yarn global add node-red-contrib-bigtimer \
     # clean apk deps
     && apk del .gyp-build-deps
 
