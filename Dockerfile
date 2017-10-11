@@ -25,24 +25,24 @@ RUN set -x \
     # clean apk deps
     && apk del .build-deps
 
+WORKDIR /opt/node-red/data
+
 RUN set -x \    
     && apk add --no-cache --virtual .gyp-build-deps \
         make \
         g++ \
         python \
     # install node-red & modules
-    && yarn global add node-red@$NODE_RED_VERSION \
+    && yarn global add node-red@$NODE_RED_VERSION \    
     && yarn global add node-red-contrib-openzwave \
+    && yarn add node-red-contrib-bigtimer \
     # clean apk deps
     && apk del .gyp-build-deps
 
 WORKDIR /opt/node-red
-RUN chown 1000:1000 .
+RUN chown -R 1000:1000 .
 
 USER 1000:uucp
-
-RUN set -x \
-  && mkdir -p /opt/node-red/data
 
 ENV HOME="/opt/node-red/data"
 
