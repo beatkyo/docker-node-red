@@ -48,6 +48,8 @@ RUN set -x \
 	node-red-contrib-bigtimer \
     	node-red-contrib-simple-weekly-scheduler \
     	node-red-contrib-light-scheduler \
+	node-red-dashboard \
+	node-red-node-wol \
     # clean apk deps
     && apk del .gyp-build-deps
 
