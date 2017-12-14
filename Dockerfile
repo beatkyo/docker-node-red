@@ -45,10 +45,9 @@ RUN set -x \
         python \
     # modules
     && yarn global add \
-	node-red-contrib-bigtimer \
-    	node-red-contrib-simple-weekly-scheduler \
-    	node-red-contrib-light-scheduler \
-	node-red-dashboard \
+	node-red-contrib-bigtimer@1.8.0 \
+    	node-red-contrib-light-scheduler@0.0.11 \
+	node-red-dashboard@2.6.2 \
 	node-red-node-wol \
     # clean apk deps
     && apk del .gyp-build-deps
